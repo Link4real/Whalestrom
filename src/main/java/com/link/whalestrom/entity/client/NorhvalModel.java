@@ -1,5 +1,6 @@
 package com.link.whalestrom.entity.client;
 
+import com.link.whalestrom.entity.animation.ModAnimations;
 import com.link.whalestrom.entity.custom.NorhvalEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
@@ -7,6 +8,7 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 public class NorhvalModel<T extends NorhvalEntity> extends SinglePartEntityModel<T> {
 	private final ModelPart norhval;
@@ -44,7 +46,20 @@ public class NorhvalModel<T extends NorhvalEntity> extends SinglePartEntityModel
 	}
 	@Override
 	public void setAngles(NorhvalEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.getPart().traverse().forEach(ModelPart::resetTransform);
+		this.setHeadAngles(netHeadYaw, headPitch);
+
+		this.animateMovement(ModAnimations.NORHVAL_FLYING, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.updateAnimation(entity.idleAnimationState, ModAnimations.NORHVAL_IDLE, ageInTicks, 1f);
 	}
+	private void setHeadAngles(float headYaw, float headPitch) {
+		headYaw = MathHelper.clamp(headYaw, -30.0F, 30.0F);
+		headPitch = MathHelper.clamp(headPitch, -25.0F, 45.0F);
+
+		this.head.yaw = headYaw * 0.017453292F;
+		this.head.pitch = headPitch * 0.017453292F;
+	}
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
 		norhval.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);

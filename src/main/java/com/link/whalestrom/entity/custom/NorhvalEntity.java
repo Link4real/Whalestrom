@@ -2,23 +2,28 @@ package com.link.whalestrom.entity.custom;
 
 import com.link.whalestrom.Whalestrom;
 import com.link.whalestrom.entity.ModEntities;
+import net.minecraft.entity.AnimationState;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
@@ -46,6 +51,32 @@ public class NorhvalEntity extends FlyingEntity {
     }
     public boolean isBreedingItem(ItemStack stack) {
         return stack.isOf(Items.COD);
+    }
+    @Override
+    public void tick() {
+        super.tick();
+        if(this.getWorld().isClient()) {
+            updateAnimations();
+        }
+    }
+
+    //Animations:
+    @Override
+    protected void updateLimbs(float posDelta) {
+        float f = this.getPose() == EntityPose.STANDING ? Math.min(posDelta * 6.0f, 1.0f): 0.0f;
+        this.limbAnimator.updateLimbs(f, 0.2f);
+    }
+
+    public final AnimationState idleAnimationState = new AnimationState();
+    private int idleAnimationTimeout = 0;
+
+    private void updateAnimations() {
+        if (this.idleAnimationTimeout <= 0) {
+            this.idleAnimationTimeout = this.random.nextInt(40) + 80;
+            this.idleAnimationState.start(this.age);
+        } else {
+            --this.idleAnimationTimeout;
+        }
     }
 
     // Norhval flies randomly through the air:
@@ -116,7 +147,7 @@ public class NorhvalEntity extends FlyingEntity {
         }
     }
 
-
+    //Norhval looks at direction, it is flying towards
     private static class LookAtDirectionGoal extends Goal {
         private final NorhvalEntity norhval;
         public LookAtDirectionGoal(NorhvalEntity norhval) {
@@ -135,6 +166,24 @@ public class NorhvalEntity extends FlyingEntity {
         }
     }
 
+    //Sounds
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_DOLPHIN_AMBIENT;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.ENTITY_DOLPHIN_HURT;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_DOLPHIN_DEATH;
+    }
 
     public NorhvalEntity createChild(ServerWorld world, PassiveEntity entity) {
         return ModEntities.NORHVAL.create(world);
