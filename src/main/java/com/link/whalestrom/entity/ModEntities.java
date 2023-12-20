@@ -14,5 +14,5 @@ public class ModEntities {
     public static final EntityType<NorhvalEntity> NORHVAL = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(Whalestrom.MOD_ID, "norhval"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, NorhvalEntity::new)
-                    .dimensions(EntityDimensions.fixed(3f, 1f)).build()); //Hitbox
+                    .dimensions(EntityDimensions.fixed(2f, 1f)).build()); //Hitbox
 }

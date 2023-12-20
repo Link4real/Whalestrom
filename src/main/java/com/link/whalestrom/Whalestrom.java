@@ -23,8 +23,9 @@ public class Whalestrom implements ModInitializer {
 	public static ItemGroup ITEM_GROUP = Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID, "main"),
 			FabricItemGroup.builder().displayName(Text.literal("Whalestrom")).icon(() -> new ItemStack(ModItems.NORHVAL_SPAWN_EGG)).entries((displayContext, entries) -> {
 				entries.add(ModItems.NORHVAL_SPAWN_EGG);
-					})
-					.build());
+				entries.add(ModItems.WHALE_TOOTH);
+
+			}).build());
 	@Override
 	public void onInitialize() {
 		NorhvalEntity.registerModEntities();

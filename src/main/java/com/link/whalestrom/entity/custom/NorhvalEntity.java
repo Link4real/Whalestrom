@@ -13,8 +13,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -28,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.EnumSet;
 
 public class NorhvalEntity extends FlyingEntity {
+    public static final Ingredient BREEDING_INGREDIENT = Ingredient.ofItems(Items.COD);
     public NorhvalEntity(EntityType<? extends FlyingEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 30;
@@ -39,6 +42,7 @@ public class NorhvalEntity extends FlyingEntity {
         this.goalSelector.add(1, new FlyRandomlyGoal(this));
         //this.goalSelector.add(2, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
         this.goalSelector.add(1, new LookAtDirectionGoal(this));
+        this.goalSelector.add(7, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
     }
 
     public static DefaultAttributeContainer.Builder createNorhvalAttributes() {
@@ -50,7 +54,7 @@ public class NorhvalEntity extends FlyingEntity {
 
     }
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.isOf(Items.COD);
+        return BREEDING_INGREDIENT.test(stack);
     }
     @Override
     public void tick() {
