@@ -2,35 +2,29 @@ package com.link.whalestrom.entity.custom;
 
 import com.link.whalestrom.Whalestrom;
 import com.link.whalestrom.entity.ModEntities;
-import com.link.whalestrom.entity.client.NorhvalRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.FlyingEntity;
-import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
-public class NorhvalEntity extends AnimalEntity{
-    public NorhvalEntity(EntityType<? extends NorhvalEntity> entityType, World world) {
-        super((EntityType<? extends AnimalEntity>)entityType, world);
+public class NorhvalEntity extends FlyingEntity {
+    public NorhvalEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+        super(entityType, world);
         this.experiencePoints = 30;
         this.moveControl = new NorhvalMoveControl(this);
     }
@@ -38,7 +32,7 @@ public class NorhvalEntity extends AnimalEntity{
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new FlyRandomlyGoal(this));
-        this.goalSelector.add(2, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
+        //this.goalSelector.add(2, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
         this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 4f));
         this.goalSelector.add(6, new LookAroundGoal(this));
     }
@@ -51,11 +45,9 @@ public class NorhvalEntity extends AnimalEntity{
              .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f);
 
     }
-
-    //@Override
-    //public boolean isBreedingItem(ItemStack stack) {
-    //    return stack.isOf(Items.COD);
-    //}
+    public boolean isBreedingItem(ItemStack stack) {
+        return stack.isOf(Items.COD);
+    }
 
     // Norhval flies randomly through the air:
     static class FlyRandomlyGoal
@@ -131,9 +123,7 @@ public class NorhvalEntity extends AnimalEntity{
             return true;
         }
     }
-    @Nullable
-    @Override
-    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+    public NorhvalEntity createChild(ServerWorld world, PassiveEntity entity) {
         return ModEntities.NORHVAL.create(world);
     }
     public static void registerModEntities() {
