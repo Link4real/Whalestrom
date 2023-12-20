@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "whalestrom",
+	"version": "${version}",
+	"name": "Whalestrom",
+	"description": "Adds a flying whale!",
+	"authors": [
+		"Link4real"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/whalestrom/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.link.whalestrom.Whalestrom"
+		],
+		"client": [
+			"com.link.whalestrom.WhalestromClient"
+		],
+		"fabric-datagen": [
+			"com.link.whalestrom.WhalestromDataGenerator"
+		]
+	},
+	"mixins": [
+		"whalestrom.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.3",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
