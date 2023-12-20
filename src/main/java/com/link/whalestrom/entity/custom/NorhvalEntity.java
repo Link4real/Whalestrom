@@ -33,8 +33,7 @@ public class NorhvalEntity extends FlyingEntity {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new FlyRandomlyGoal(this));
         //this.goalSelector.add(2, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
-        this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 4f));
-        this.goalSelector.add(6, new LookAroundGoal(this));
+        this.goalSelector.add(1, new LookAtDirectionGoal(this));
     }
 
     public static DefaultAttributeContainer.Builder createNorhvalAttributes() {
@@ -50,15 +49,12 @@ public class NorhvalEntity extends FlyingEntity {
     }
 
     // Norhval flies randomly through the air:
-    static class FlyRandomlyGoal
-            extends Goal {
+    static class FlyRandomlyGoal  extends Goal {
         private final NorhvalEntity norhval;
-
         public FlyRandomlyGoal(NorhvalEntity norhval) {
             this.norhval = norhval;
             this.setControls(EnumSet.of(Goal.Control.MOVE));
         }
-
         @Override
         public boolean canStart() {
             double f;
@@ -71,13 +67,11 @@ public class NorhvalEntity extends FlyingEntity {
             double g = d * d + (e = moveControl.getTargetY() - this.norhval.getY()) * e + (f = moveControl.getTargetZ() - this.norhval.getZ()) * f;
             return g < 1.0 || g > 3600.0;
         }
-
         @Override
         public boolean shouldContinue() {
             return false;
         }
-
-        @Override
+            @Override
         public void start() {
             Random random = this.norhval.getRandom();
             double d = this.norhval.getX() + (double)((random.nextFloat() * 2.0f - 1.0f) * 16.0f);
@@ -86,16 +80,15 @@ public class NorhvalEntity extends FlyingEntity {
             this.norhval.getMoveControl().moveTo(d, e, f, 1.0);
         }
     }
-    static class NorhvalMoveControl
-            extends MoveControl {
+
+
+    static class NorhvalMoveControl extends MoveControl {
         private final NorhvalEntity norhval;
         private int collisionCheckCooldown;
-
         public NorhvalMoveControl(NorhvalEntity norhval) {
             super(norhval);
             this.norhval = norhval;
         }
-
         @Override
         public void tick() {
             if (this.state != MoveControl.State.MOVE_TO) {
@@ -112,7 +105,6 @@ public class NorhvalEntity extends FlyingEntity {
                 }
             }
         }
-
         private boolean willCollide(Vec3d direction, int steps) {
             Box box = this.norhval.getBoundingBox();
             for (int i = 1; i < steps; ++i) {
@@ -123,6 +115,27 @@ public class NorhvalEntity extends FlyingEntity {
             return true;
         }
     }
+
+
+    private static class LookAtDirectionGoal extends Goal {
+        private final NorhvalEntity norhval;
+        public LookAtDirectionGoal(NorhvalEntity norhval) {
+            this.norhval = norhval;
+            this.setControls(EnumSet.of(Goal.Control.LOOK));
+        }
+        @Override
+        public boolean canStart() {
+            return true;
+        }
+        @Override
+        public void tick() {
+            Vec3d vec3d = this.norhval.getVelocity();
+            this.norhval.setYaw(-((float) MathHelper.atan2(vec3d.x, vec3d.z)) * 57.295776F);
+            this.norhval.bodyYaw = this.norhval.getYaw();
+        }
+    }
+
+
     public NorhvalEntity createChild(ServerWorld world, PassiveEntity entity) {
         return ModEntities.NORHVAL.create(world);
     }
