@@ -26,7 +26,7 @@ public class NorhvalRenderer extends MobEntityRenderer<NorhvalEntity, NorhvalMod
         if(mobEntity.isBaby()) {
             matrixStack.scale(0.3f, 0.3f, 0.3f); //Size of Baby
         }else {
-            matrixStack.scale(6f, 6f, 6f); //Size of Adult
+            matrixStack.scale(2f, 2f, 2f); //Size of Adult
         }
 
         super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);

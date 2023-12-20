@@ -24,6 +24,7 @@ public class Whalestrom implements ModInitializer {
 			FabricItemGroup.builder().displayName(Text.literal("Whalestrom")).icon(() -> new ItemStack(ModItems.NORHVAL_SPAWN_EGG)).entries((displayContext, entries) -> {
 				entries.add(ModItems.NORHVAL_SPAWN_EGG);
 				entries.add(ModItems.WHALE_TOOTH);
+				entries.add(ModItems.ARTIFACT_LEVITATION);
 
 			}).build());
 	@Override
