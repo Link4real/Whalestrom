@@ -100,7 +100,6 @@ public class NorhvalEntity extends FlyingEntity {
         }
     }
 
-
     // Norhval flies randomly through the air:
     static class FlyRandomlyGoal  extends Goal {
         private final NorhvalEntity norhval;
