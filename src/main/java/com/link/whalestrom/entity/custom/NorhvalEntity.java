@@ -1,15 +1,23 @@
 package com.link.whalestrom.entity.custom;
 
 import com.link.whalestrom.Whalestrom;
+import com.link.whalestrom.WhalestromClient;
 import com.link.whalestrom.entity.ModEntities;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -27,11 +35,13 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.EnumSet;
 
 
 public class NorhvalEntity extends TameableEntity implements Mount{
+    public int keyBind = 342;
     public static final Ingredient BREEDING_INGREDIENT = Ingredient.ofItems(Items.COD);
     public NorhvalEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -43,7 +53,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(2, new FlyRandomlyGoal(this));
-        this.goalSelector.add(2, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
+        this.goalSelector.add(0, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
         this.goalSelector.add(3, new LookAtDirectionGoal(this));
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
         this.goalSelector.add(5, new LookAroundGoal(this));
@@ -56,9 +66,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
              .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
              .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.1f)
              .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0)
-             .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1f)
-        ;
-
+             .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5f);
     }
 
     @Override
@@ -133,7 +141,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
                     e = this.norhval.getY() + 16D * random.nextDouble();
                 else if (this.norhval.getY() < 65D)
                     e = this.norhval.getY() + 40D * random.nextDouble();
-                else if (this.norhval.getY() > 300D)
+                else if (this.norhval.getY() > 300)
                     e = this.norhval.getY() - 26D * random.nextDouble();
 
                 this.norhval.getMoveControl().moveTo(d, e, f, 1.0D);
@@ -155,6 +163,9 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         public NorhvalMoveControl(NorhvalEntity norhval) {
             super(norhval);
             this.norhval = norhval;
+            if (norhval.isLeashed()) {
+              this.norhval.isBaby();
+            }
         }
 
         @Override
@@ -248,11 +259,25 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         return super.interactMob(player, hand);
     }
 
+    @Override
+    public boolean hasNoGravity() {
+        return true;
+    }
+    @Environment(EnvType.CLIENT)
+    public static void flyWhaleDown(ClientPlayerEntity player, String keyString) {
+        if (player.getVehicle() != null && player.getVehicle() instanceof NorhvalEntity)
+            ((NorhvalEntity) player.getVehicle()).setKeyBind(keyString);
+    }
+    public void setKeyBind(String key) {
+        this.keyBind = InputUtil.fromTranslationKey(key).getCode();
+    }
     //Flying Entity and Rideable Entity
     @Override
     protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
     }
-
+    private boolean canBeControlledByRider() {
+        return this.getControllingPassenger() instanceof LivingEntity;
+    }
     @Override
     public void travel(Vec3d movementInput) {
         if(this.hasPassengers() && getControllingPassenger() instanceof PlayerEntity) {
@@ -263,8 +288,10 @@ public class NorhvalEntity extends TameableEntity implements Mount{
             this.setRotation(this.getYaw(), this.getPitch());
             this.bodyYaw = this.getYaw();
             this.headYaw = this.bodyYaw;
+            boolean FlyDown = false;
             float f = livingentity.sidewaysSpeed * 0.5F;
             float f1 = livingentity.forwardSpeed;
+            FlyDown = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), this.keyBind);
             if (f1 <= 0.0F) {
                 f1 *= 0.25F;
             }
@@ -272,6 +299,21 @@ public class NorhvalEntity extends TameableEntity implements Mount{
                 float newSpeed = (float) this.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 if (MinecraftClient.getInstance().options.sprintKey.isPressed()) {
                     newSpeed *= 2;
+                }
+                if (MinecraftClient.getInstance().options.jumpKey.isPressed()) {
+                    this.jump();
+                }
+                if (MinecraftClient.getInstance().options.forwardKey.isPressed()) {
+                    newSpeed *= 2;
+                }
+                if (MinecraftClient.getInstance().options.leftKey.isPressed()) {
+                    this.sidewaysSpeed = 2;
+                }
+                if (MinecraftClient.getInstance().options.rightKey.isPressed()) {
+                    this.sidewaysSpeed = 2;
+                }
+                while (FlyDown) {
+                    movementInput.getY();
                 }
                 if (this.isTouchingWater()) {
                     this.updateVelocity(0.02f, movementInput);
@@ -284,11 +326,11 @@ public class NorhvalEntity extends TameableEntity implements Mount{
                 }
                 this.setMovementSpeed(newSpeed);
                 super.travel(new Vec3d(f, movementInput.y, f1));
-              }
-          } else {
+            }
+        } else {
             super.travel(movementInput);
         }
-            this.updateLimbs(false);
+        this.updateLimbs(false);
     }
 
     @Override
@@ -331,8 +373,20 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         }
         return super.updatePassengerForDismount(passenger);
     }
+    @Override
+    protected void updatePassengerPosition(Entity passenger, PositionUpdater positionUpdater) {
+        if (!this.hasPassenger(passenger)) {
+            return;
+        }
+        float offSet = 12F;
+        if (passenger.equals(this.getFirstPassenger())) {
+            offSet = 1F;
+        }
+        float f = MathHelper.sin(this.bodyYaw * 0.017453292F) * offSet;
+        float g = MathHelper.cos(this.bodyYaw * 0.017453292F) * offSet;
 
-
+        positionUpdater.accept(passenger, this.getX() + (double) (0.1F * f), this.getBodyY(1F), this.getZ() - (double) (0.1F * g));
+    }
     //Sounds
     @Nullable
     @Override
