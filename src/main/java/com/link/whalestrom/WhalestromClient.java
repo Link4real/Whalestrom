@@ -13,7 +13,6 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 public class WhalestromClient implements ClientModInitializer {
-    private static KeyBinding keyBinding;
     @Override
     public void onInitializeClient() {
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.NORHVAL, NorhvalModel::getTexturedModelData);

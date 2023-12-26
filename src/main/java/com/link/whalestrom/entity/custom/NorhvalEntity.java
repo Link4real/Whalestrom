@@ -3,8 +3,10 @@ package com.link.whalestrom.entity.custom;
 import com.link.whalestrom.Whalestrom;
 import com.link.whalestrom.WhalestromClient;
 import com.link.whalestrom.entity.ModEntities;
+import com.link.whalestrom.init.KeybindsInit;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -29,6 +31,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
@@ -258,7 +261,6 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         }
         return super.interactMob(player, hand);
     }
-
     @Override
     public boolean hasNoGravity() {
         return true;
@@ -288,23 +290,21 @@ public class NorhvalEntity extends TameableEntity implements Mount{
             this.setRotation(this.getYaw(), this.getPitch());
             this.bodyYaw = this.getYaw();
             this.headYaw = this.bodyYaw;
-            boolean FlyDown = false;
-            float f = livingentity.sidewaysSpeed * 0.5F;
+            float f = livingentity.sidewaysSpeed * 0.75F;
             float f1 = livingentity.forwardSpeed;
-            FlyDown = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), this.keyBind);
             if (f1 <= 0.0F) {
                 f1 *= 0.25F;
             }
             if (this.isLogicalSideForUpdatingMovement()) {
                 float newSpeed = (float) this.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 if (MinecraftClient.getInstance().options.sprintKey.isPressed()) {
-                    newSpeed *= 2;
+                    newSpeed *= 1.5;
                 }
                 if (MinecraftClient.getInstance().options.jumpKey.isPressed()) {
                     this.jump();
                 }
                 if (MinecraftClient.getInstance().options.forwardKey.isPressed()) {
-                    newSpeed *= 2;
+                    newSpeed *= 1.75F;
                 }
                 if (MinecraftClient.getInstance().options.leftKey.isPressed()) {
                     this.sidewaysSpeed = 2;
@@ -312,8 +312,14 @@ public class NorhvalEntity extends TameableEntity implements Mount{
                 if (MinecraftClient.getInstance().options.rightKey.isPressed()) {
                     this.sidewaysSpeed = 2;
                 }
-                while (FlyDown) {
-                    movementInput.getY();
+                if (KeybindsInit.flyDown.isPressed()) {
+                    if (!MinecraftClient.getInstance().options.jumpKey.isPressed()) {
+                        this.updateVelocity(0.0f, movementInput);
+                        this.move(MovementType.SELF, this.getVelocity());
+                        this.setVelocity(this.getVelocity().add(0, -0.008f, 0));
+                    } else {
+                        this.setVelocity(this.getVelocity().multiply(0,0,0));
+                    }
                 }
                 if (this.isTouchingWater()) {
                     this.updateVelocity(0.02f, movementInput);
