@@ -69,7 +69,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
              .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
              .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.1f)
              .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0)
-             .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5f);
+             .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f);
     }
 
     @Override
@@ -166,9 +166,6 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         public NorhvalMoveControl(NorhvalEntity norhval) {
             super(norhval);
             this.norhval = norhval;
-            if (norhval.isLeashed()) {
-              this.norhval.isBaby();
-            }
         }
 
         @Override
@@ -255,7 +252,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
 
         }
         if(isTamed() && hand == Hand.MAIN_HAND && item != itemForTaming) {
-            if (!player.isSneaking()) {
+            if (!player.isSneaking() && !this.isBaby()) {
                 setRiding(player);
             }
         }
@@ -297,28 +294,54 @@ public class NorhvalEntity extends TameableEntity implements Mount{
             }
             if (this.isLogicalSideForUpdatingMovement()) {
                 float newSpeed = (float) this.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+                // Sprint Key -> Faster Speed; If Left, Right, Down is pressed -> slower speed
                 if (MinecraftClient.getInstance().options.sprintKey.isPressed()) {
-                    newSpeed *= 1.5;
+                    if (!MinecraftClient.getInstance().options.leftKey.isPressed() ||
+                            !MinecraftClient.getInstance().options.rightKey.isPressed() ||
+                            !KeybindsInit.flyDown.isPressed()) {
+                        newSpeed *= 1.75;
+                    } else {
+                        newSpeed *= 0.5;
+                    }
                 }
                 if (MinecraftClient.getInstance().options.jumpKey.isPressed()) {
-                    this.jump();
+                    if(!KeybindsInit.flyDown.isPressed()) {
+                        this.jump();
+                    } else {
+                        this.setVelocity(this.getVelocity().multiply(0,0.85,0));
+                    }
                 }
                 if (MinecraftClient.getInstance().options.forwardKey.isPressed()) {
-                    newSpeed *= 1.75F;
+                    if (!KeybindsInit.flyDown.isPressed()) {
+                        newSpeed *= 1.75F;
+                    } else {
+                        this.setVelocity(this.getVelocity().multiply(0,0.85,0));
+                    }
                 }
                 if (MinecraftClient.getInstance().options.leftKey.isPressed()) {
-                    this.sidewaysSpeed = 2;
+                    if (!KeybindsInit.flyDown.isPressed()) {
+                        this.sidewaysSpeed = 2;
+                    } else {
+                        this.setVelocity(this.getVelocity().multiply(0,0.85,0));
+                    }
                 }
                 if (MinecraftClient.getInstance().options.rightKey.isPressed()) {
-                    this.sidewaysSpeed = 2;
+                    if (!KeybindsInit.flyDown.isPressed()) {
+                        this.sidewaysSpeed = 2;
+                    } else {
+                        this.setVelocity(this.getVelocity().multiply(0,0.85,0));
+                    }
                 }
                 if (KeybindsInit.flyDown.isPressed()) {
-                    if (!MinecraftClient.getInstance().options.jumpKey.isPressed()) {
+                    if (!MinecraftClient.getInstance().options.jumpKey.isPressed() ||
+                            !MinecraftClient.getInstance().options.forwardKey.isPressed() ||
+                                 !MinecraftClient.getInstance().options.rightKey.isPressed() ||
+                                      !MinecraftClient.getInstance().options.leftKey.isPressed()) {
                         this.updateVelocity(0.0f, movementInput);
                         this.move(MovementType.SELF, this.getVelocity());
                         this.setVelocity(this.getVelocity().add(0, -0.008f, 0));
                     } else {
-                        this.setVelocity(this.getVelocity().multiply(0,0,0));
+                        this.setVelocity(this.getVelocity().add(0, 0f, 0));
                     }
                 }
                 if (this.isTouchingWater()) {
@@ -338,7 +361,6 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         }
         this.updateLimbs(false);
     }
-
     @Override
     public boolean isClimbing() {
         return false;
