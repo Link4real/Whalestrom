@@ -149,11 +149,9 @@ public class NorhvalEntity extends TameableEntity implements Mount{
                 this.norhval.getMoveControl().moveTo(d, e, f, 1.0D);
             }
         }
-
-
     @Override
     public boolean canBeLeashedBy(PlayerEntity player) {
-        return true;
+        return !this.isBaby();
     }
     @Override
     public boolean shouldDismountUnderwater() {
