@@ -3,6 +3,7 @@ package com.link.whalestrom;
 import com.link.whalestrom.entity.ModEntities;
 import com.link.whalestrom.entity.custom.NorhvalEntity;
 import com.link.whalestrom.item.ModItems;
+import com.link.whalestrom.world.gen.EntitySpawns;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -27,11 +28,15 @@ public class Whalestrom implements ModInitializer {
 				entries.add(ModItems.ARTIFACT_LEVITATION);
 
 			}).build());
+	public static void generateWorldGeneration() {
+		EntitySpawns.addSpawns();
+	}
 	@Override
 	public void onInitialize() {
 		NorhvalEntity.registerModEntities();
 		FabricDefaultAttributeRegistry.register(ModEntities.NORHVAL, NorhvalEntity.createNorhvalAttributes());
 		ModItems.registerItems();
+		Whalestrom.generateWorldGeneration();
 		LOGGER.info("Successfully loaded Whalestrom!");
 	}
 }
