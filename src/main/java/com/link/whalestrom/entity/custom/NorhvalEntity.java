@@ -106,7 +106,6 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     }
 
 
-
     // Norhval flies randomly through the air:
     static class FlyRandomlyGoal  extends Goal {
         private final NorhvalEntity norhval;
@@ -140,9 +139,9 @@ public class NorhvalEntity extends TameableEntity implements Mount{
                 double e = this.norhval.getY() + (double) ((random.nextDouble() * 2.0F - 1.0F) * 16.0F);
                 double f = this.norhval.getZ() + randomZ;
 
-                if (this.norhval.getY() < 40D)
+                if (this.norhval.getY() < 68D)
                     e = this.norhval.getY() + 16D * random.nextDouble();
-                else if (this.norhval.getY() < 65D)
+                else if (this.norhval.getY() < 85D)
                     e = this.norhval.getY() + 40D * random.nextDouble();
                 else if (this.norhval.getY() > 300)
                     e = this.norhval.getY() - 26D * random.nextDouble();
@@ -156,7 +155,10 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     public boolean canBeLeashedBy(PlayerEntity player) {
         return true;
     }
-
+    @Override
+    public boolean shouldDismountUnderwater() {
+        return true;
+    }
 
     private static class NorhvalMoveControl extends MoveControl {
         private final NorhvalEntity norhval;
@@ -252,7 +254,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
 
         }
         if(isTamed() && hand == Hand.MAIN_HAND && item != itemForTaming) {
-            if (!player.isSneaking() && !this.isBaby()) {
+            if (!player.isSneaking()  && !this.isBaby()) {
                 setRiding(player);
             }
         }
@@ -275,7 +277,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
     }
     private boolean canBeControlledByRider() {
-        return this.getControllingPassenger() instanceof LivingEntity;
+        return this.getControllingPassenger() != null;
     }
     @Override
     public void travel(Vec3d movementInput) {
@@ -296,8 +298,8 @@ public class NorhvalEntity extends TameableEntity implements Mount{
                 float newSpeed = (float) this.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 // Sprint Key -> Faster Speed; If Left, Right, Down is pressed -> slower speed
                 if (MinecraftClient.getInstance().options.sprintKey.isPressed()) {
-                    if (!MinecraftClient.getInstance().options.leftKey.isPressed() ||
-                            !MinecraftClient.getInstance().options.rightKey.isPressed() ||
+                    if (!MinecraftClient.getInstance().options.leftKey.isPressed() ^
+                            !MinecraftClient.getInstance().options.rightKey.isPressed() ^
                             !KeybindsInit.flyDown.isPressed()) {
                         newSpeed *= 1.75;
                     } else {
@@ -312,37 +314,22 @@ public class NorhvalEntity extends TameableEntity implements Mount{
                     }
                 }
                 if (MinecraftClient.getInstance().options.forwardKey.isPressed()) {
-                    if (!KeybindsInit.flyDown.isPressed()) {
-                        newSpeed *= 1.75F;
-                    } else {
-                        this.setVelocity(this.getVelocity().multiply(0,0.85,0));
+                    newSpeed *= 1.75F;
+                    if (KeybindsInit.flyDown.isPressed()) {
+                        newSpeed *= 1.35F;
                     }
                 }
                 if (MinecraftClient.getInstance().options.leftKey.isPressed()) {
-                    if (!KeybindsInit.flyDown.isPressed()) {
-                        this.sidewaysSpeed = 2;
-                    } else {
-                        this.setVelocity(this.getVelocity().multiply(0,0.85,0));
-                    }
+
+                    this.sidewaysSpeed = 2;
                 }
                 if (MinecraftClient.getInstance().options.rightKey.isPressed()) {
-                    if (!KeybindsInit.flyDown.isPressed()) {
-                        this.sidewaysSpeed = 2;
-                    } else {
-                        this.setVelocity(this.getVelocity().multiply(0,0.85,0));
-                    }
+                    this.sidewaysSpeed = 2;
                 }
                 if (KeybindsInit.flyDown.isPressed()) {
-                    if (!MinecraftClient.getInstance().options.jumpKey.isPressed() ||
-                            !MinecraftClient.getInstance().options.forwardKey.isPressed() ||
-                                 !MinecraftClient.getInstance().options.rightKey.isPressed() ||
-                                      !MinecraftClient.getInstance().options.leftKey.isPressed()) {
                         this.updateVelocity(0.0f, movementInput);
                         this.move(MovementType.SELF, this.getVelocity());
                         this.setVelocity(this.getVelocity().add(0, -0.008f, 0));
-                    } else {
-                        this.setVelocity(this.getVelocity().add(0, 0f, 0));
-                    }
                 }
                 if (this.isTouchingWater()) {
                     this.updateVelocity(0.02f, movementInput);
