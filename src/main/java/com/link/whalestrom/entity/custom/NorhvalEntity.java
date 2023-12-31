@@ -58,10 +58,9 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         this.goalSelector.add(2, new FlyRandomlyGoal(this));
         this.goalSelector.add(0, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
         this.goalSelector.add(3, new LookAtDirectionGoal(this));
-        this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
-        this.goalSelector.add(5, new LookAroundGoal(this));
+        this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
+        this.goalSelector.add(3, new LookAroundGoal(this));
         this.goalSelector.add(0, new FollowOwnerGoal(this, 1.1D, 20f, 3f, false));
-        //this.goalSelector.add(1, new (this));
     }
 
     public static DefaultAttributeContainer.Builder createNorhvalAttributes() {
@@ -79,6 +78,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
             updateAnimations();
         }
     }
+
 
     //Animations:
     @Override
@@ -191,10 +191,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         private boolean willCollide() {
             Box box = this.norhval.getBoundingBox();
             box = box.expand(0.2D);
-            if (this.norhval.getWorld().isSpaceEmpty(this.norhval, box)) {
-                return false;
-            }
-            return true;
+            return !this.norhval.getWorld().isSpaceEmpty(this.norhval, box);
         }
     }
 

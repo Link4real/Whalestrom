@@ -72,8 +72,8 @@ public class NorhvalModel<T extends NorhvalEntity> extends SinglePartEntityModel
 		headYaw = MathHelper.clamp(headYaw, -30.0F, 30.0F);
 		headPitch = MathHelper.clamp(headPitch, -25.0F, 45.0F);
 
-		this.head.yaw = headYaw * 0.017453292F;
-		this.head.pitch = headPitch * 0.017453292F;
+		this.head.yaw = headYaw * ((float)Math.PI / 180);
+		this.head.pitch = headPitch * ((float)Math.PI / 180);
 	}
 
 	@Override

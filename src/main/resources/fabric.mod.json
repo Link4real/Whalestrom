@@ -3,13 +3,14 @@
 	"id": "whalestrom",
 	"version": "${version}",
 	"name": "Whalestrom",
-	"description": "Adds a flying whale!",
+	"description": "Adds flying whales to the game!",
 	"authors": [
 		"Link4real"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://link4real.github.io/",
+		"sources": "https://github.com/Link4real/Whalestrom",
+		"issues": "https://github.com/Link4real/Whalestrom/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/whalestrom/icon.png",
@@ -20,9 +21,6 @@
 		],
 		"client": [
 			"com.link.whalestrom.WhalestromClient"
-		],
-		"fabric-datagen": [
-			"com.link.whalestrom.WhalestromDataGenerator"
 		]
 	},
 	"mixins": [

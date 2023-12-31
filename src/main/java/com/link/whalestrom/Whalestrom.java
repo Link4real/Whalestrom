@@ -40,3 +40,13 @@ public class Whalestrom implements ModInitializer {
 		LOGGER.info("Successfully loaded Whalestrom!");
 	}
 }
+//                                                        |--|  |--|
+//          _______|-------------------------------|         |--|
+//         |  o    |                               |_____-_|---|
+//         |       |                               |      |---|
+//         |_______|--------|          |-----------|------|
+//                           |          |
+//                            |          |
+//                               |         |
+//                                  |_______|
+//Link4real 2023

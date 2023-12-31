@@ -4,5 +4,6 @@
   "item.whalestrom.whale_tooth": "Whale Tooth",
   "item.whalestrom.artifact_of_levitation": "Artifact of Levitation",
   "key.whalestrom.flydown": "Fly Down with your whale",
-  "category.whalestrom.whalestrom": "Whalestrom Keybinds"
+  "category.whalestrom.whalestrom": "Whalestrom Keybinds",
+  "item.whalestrom.artifact_of_levitation.tooltip": "This exquisite Artifact grants its user levitation!"
 }
