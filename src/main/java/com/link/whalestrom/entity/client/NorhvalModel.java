@@ -13,7 +13,7 @@ public class NorhvalModel<T extends NorhvalEntity> extends SinglePartEntityModel
 	private final ModelPart head;
 	public NorhvalModel(ModelPart root) {
 		this.norhval = root.getChild("norhval");
-		this.head = norhval.getChild("body");
+		this.head = norhval.getChild("body").getChild("head");
 	}
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
@@ -62,19 +62,18 @@ public class NorhvalModel<T extends NorhvalEntity> extends SinglePartEntityModel
 	@Override
 	public void setAngles(NorhvalEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.getPart().traverse().forEach(ModelPart::resetTransform);
-		this.setHeadAngles(netHeadYaw, headPitch);
+		this.setHeadAngles(entity, netHeadYaw, headPitch, ageInTicks);
 
 		this.animateMovement(ModAnimations.NORHVAL_FLYING, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.updateAnimation(entity.idleAnimationState, ModAnimations.NORHVAL_IDLE, ageInTicks, 1f);
 		this.updateAnimation(entity.sitAnimationState, ModAnimations.NORHVAL_SITTING, ageInTicks, 1f);
-
 	}
-	private void setHeadAngles(float headYaw, float headPitch) {
+	private void setHeadAngles(NorhvalEntity entity, float headYaw, float headPitch, float animationProgress) {
 		headYaw = MathHelper.clamp(headYaw, -30.0F, 30.0F);
 		headPitch = MathHelper.clamp(headPitch, -25.0F, 45.0F);
 
-		this.head.yaw = headYaw * ((float)Math.PI / 180);
-		this.head.pitch = headPitch * ((float)Math.PI / 180);
+		this.head.yaw = headYaw * 0.0027453292F;
+		this.head.pitch = headPitch * 0.0027453292F;
 	}
 
 	@Override

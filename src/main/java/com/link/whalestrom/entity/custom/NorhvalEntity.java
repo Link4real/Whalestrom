@@ -49,13 +49,13 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(0, new SitGoal(this));
-        this.goalSelector.add(2, new FlyRandomlyGoal(this));
+        this.goalSelector.add(1, new FlyRandomlyGoal(this));
         this.goalSelector.add(0, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
         this.goalSelector.add(3, new LookAtDirectionGoal(this));
-        this.goalSelector.add(1, new FollowParentGoal(this, 0.1D));
+        this.goalSelector.add(2, new FollowParentGoal(this, 0.1D));
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
         this.goalSelector.add(3, new LookAroundGoal(this));
-        this.goalSelector.add(1, new FollowOwnerGoal(this, 1.1D, 20f, 5f, false));
+        this.goalSelector.add(2, new FollowOwnerGoal(this, 1.1D, 20f, 5f, false));
     }
 
 
@@ -90,7 +90,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     public final AnimationState sitAnimationState = new AnimationState();
     private void updateAnimations() { //setupAnimationStates
         if (this.idleAnimationTimeout <= 0) {
-            this.idleAnimationTimeout = this.random.nextInt(40) + 80;
+            this.idleAnimationTimeout = 60;
             this.idleAnimationState.start(this.age);
         } else {
             --this.idleAnimationTimeout;
@@ -383,20 +383,21 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         }
         return super.updatePassengerForDismount(passenger);
     }
-    @Override
-    protected void updatePassengerPosition(Entity passenger, PositionUpdater positionUpdater) {
-        if (!this.hasPassenger(passenger)) {
-            return;
-        }
-        float offSet = 12F;
-        if (passenger.equals(this.getFirstPassenger())) {
-            offSet = 1F;
-        }
-        float f = MathHelper.sin(this.bodyYaw * 0.017453292F) * offSet;
-        float g = MathHelper.cos(this.bodyYaw * 0.017453292F) * offSet;
+    /*   @Override
+      protected void updatePassengerPosition(Entity passenger, PositionUpdater positionUpdater) {
+          if (!this.hasPassenger(passenger)) {
+              return;
+          }
+          float offSet = 12F;
+          if (passenger.equals(this.getFirstPassenger())) {
+              offSet = 1F;
+          }
+          float f = MathHelper.sin(this.bodyYaw * 0.0027453292F) * offSet;
+          float g = MathHelper.cos(this.bodyYaw * 0.0027453292F) * offSet;
 
-        positionUpdater.accept(passenger, this.getX() + (double) (0.1F * f), this.getBodyY(1F), this.getZ() - (double) (0.1F * g));
-    }
+          positionUpdater.accept(passenger, this.getX() + (double) (0.1F * f), this.getBodyY(1F), this.getZ() - (double) (0.1F * g));
+      }
+  */
     //Sounds
     @Nullable
     @Override
