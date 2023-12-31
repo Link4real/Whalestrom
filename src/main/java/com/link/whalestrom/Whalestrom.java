@@ -2,6 +2,7 @@ package com.link.whalestrom;
 
 import com.link.whalestrom.entity.ModEntities;
 import com.link.whalestrom.entity.custom.NorhvalEntity;
+import com.link.whalestrom.init.KeybindsInit;
 import com.link.whalestrom.item.ModItems;
 import com.link.whalestrom.world.gen.EntitySpawns;
 import net.fabricmc.api.ModInitializer;
@@ -49,4 +50,4 @@ public class Whalestrom implements ModInitializer {
 //                            |          |
 //                               |         |
 //                                  |_______|
-//Link4real 2023
+//                                                          Link4real 2023

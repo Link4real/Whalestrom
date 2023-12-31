@@ -1,16 +1,13 @@
 package com.link.whalestrom.entity.custom;
 
 import com.link.whalestrom.Whalestrom;
-import com.link.whalestrom.WhalestromClient;
 import com.link.whalestrom.entity.ModEntities;
 import com.link.whalestrom.init.KeybindsInit;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.MoveControl;
@@ -18,8 +15,6 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -31,14 +26,12 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.EnumSet;
 
@@ -55,20 +48,24 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     @Override
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
+        this.goalSelector.add(0, new SitGoal(this));
         this.goalSelector.add(2, new FlyRandomlyGoal(this));
         this.goalSelector.add(0, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
         this.goalSelector.add(3, new LookAtDirectionGoal(this));
+        this.goalSelector.add(1, new FollowParentGoal(this, 0.1D));
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
         this.goalSelector.add(3, new LookAroundGoal(this));
-        this.goalSelector.add(0, new FollowOwnerGoal(this, 1.1D, 20f, 3f, false));
+        this.goalSelector.add(1, new FollowOwnerGoal(this, 1.1D, 20f, 5f, false));
     }
+
 
     public static DefaultAttributeContainer.Builder createNorhvalAttributes() {
      return MobEntity.createMobAttributes()
              .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
              .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.1f)
              .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0)
-             .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f);
+             .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f)
+             .add(EntityAttributes.HORSE_JUMP_STRENGTH, 0.3f);
     }
 
     @Override
@@ -91,7 +88,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     private int idleAnimationTimeout = 0;
 
     public final AnimationState sitAnimationState = new AnimationState();
-    private void updateAnimations() {
+    private void updateAnimations() { //setupAnimationStates
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.age);
@@ -105,7 +102,6 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         }
     }
 
-
     // Norhval flies randomly through the air:
     static class FlyRandomlyGoal  extends Goal {
         private final NorhvalEntity norhval;
@@ -117,11 +113,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
             @Override
             public boolean canStart() {
                 MoveControl moveControl = this.norhval.getMoveControl();
-                if (!moveControl.isMoving()) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return !moveControl.isMoving();
             }
 
             @Override
@@ -151,7 +143,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         }
     @Override
     public boolean canBeLeashedBy(PlayerEntity player) {
-        return !this.isBaby();
+        return !this.isBaby() && this.isTamed();
     }
     @Override
     public boolean shouldDismountUnderwater() {
@@ -243,6 +235,8 @@ public class NorhvalEntity extends TameableEntity implements Mount{
                 this.navigation.recalculatePath();
                 this.setTarget(null);
                 this.getWorld().sendEntityStatus(this, (byte)7);
+                setSitting(true);
+                setInSittingPose(true);
 
                 return ActionResult.SUCCESS;
             }
@@ -252,6 +246,12 @@ public class NorhvalEntity extends TameableEntity implements Mount{
             if (!player.isSneaking()  && !this.isBaby()) {
                 setRiding(player);
             }
+            if (player.isSneaking()) {
+                boolean sitting = !isSitting();
+                setSitting(sitting);
+                setInSittingPose(sitting);
+            }
+            return ActionResult.SUCCESS;
         }
         return super.interactMob(player, hand);
     }

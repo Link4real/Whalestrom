@@ -7,6 +7,7 @@ import net.minecraft.client.render.entity.animation.Transformation;
 
 public class ModAnimations {
 
+
     public static final Animation NORHVAL_IDLE = Animation.Builder.create(3f).looping()
             .addBoneAnimation("torso",
                     new Transformation(Transformation.Targets.TRANSLATE,
@@ -101,7 +102,9 @@ public class ModAnimations {
                     new Transformation(Transformation.Targets.ROTATE,
                             new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR),
-                            new Keyframe(0.9583434f, AnimationHelper.createRotationalVector(0f, 2f, 0f),
+                            new Keyframe(0.9583434f, AnimationHelper.createRotationalVector(0f, -0.5f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(2f, AnimationHelper.createRotationalVector(0f, 1.8f, 0f),
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(2.9583435f, AnimationHelper.createRotationalVector(0f, 2f, 0f),
                                     Transformation.Interpolations.LINEAR),
@@ -111,7 +114,7 @@ public class ModAnimations {
                     new Transformation(Transformation.Targets.TRANSLATE,
                             new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR),
-                            new Keyframe(2f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
+                            new Keyframe(2f, AnimationHelper.createTranslationalVector(1.3f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(4f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR)))
@@ -119,7 +122,9 @@ public class ModAnimations {
                     new Transformation(Transformation.Targets.ROTATE,
                             new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR),
-                            new Keyframe(0.9583434f, AnimationHelper.createRotationalVector(0f, -2f, 0f),
+                            new Keyframe(0.9583434f, AnimationHelper.createRotationalVector(0f, 0.5f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(2f, AnimationHelper.createRotationalVector(0f, -1.8f, 0f),
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(2.9583435f, AnimationHelper.createRotationalVector(0f, -2f, 0f),
                                     Transformation.Interpolations.LINEAR),
@@ -138,83 +143,6 @@ public class ModAnimations {
                             new Keyframe(1.125f, AnimationHelper.createRotationalVector(-2.5f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(3f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR))).build();
-    public static final Animation NORHVAL_SITTING = Animation.Builder.create(2f)
-            .addBoneAnimation("torso",
-                    new Transformation(Transformation.Targets.TRANSLATE,
-                            new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("torso",
-                    new Transformation(Transformation.Targets.ROTATE,
-                            new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("arm_left",
-                    new Transformation(Transformation.Targets.TRANSLATE,
-                            new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR),
-                            new Keyframe(1.75f, AnimationHelper.createTranslationalVector(10f, 25f, -23f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("arm_left",
-                    new Transformation(Transformation.Targets.ROTATE,
-                            new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR),
-                            new Keyframe(1.75f, AnimationHelper.createRotationalVector(3.92f, -57.41f, 85.35f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("arm_left",
-                    new Transformation(Transformation.Targets.SCALE,
-                            new Keyframe(0f, AnimationHelper.createScalingVector(1f, 1f, 1f),
-                                    Transformation.Interpolations.LINEAR),
-                            new Keyframe(1.75f, AnimationHelper.createScalingVector(0.8f, 1f, 0.8f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("arm_right",
-                    new Transformation(Transformation.Targets.TRANSLATE,
-                            new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR),
-                            new Keyframe(1.75f, AnimationHelper.createTranslationalVector(-10f, 25f, -23f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("arm_right",
-                    new Transformation(Transformation.Targets.ROTATE,
-                            new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR),
-                            new Keyframe(1.75f, AnimationHelper.createRotationalVector(3.92f, 57.41f, -85.35f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("arm_right",
-                    new Transformation(Transformation.Targets.SCALE,
-                            new Keyframe(0f, AnimationHelper.createScalingVector(1f, 1f, 1f),
-                                    Transformation.Interpolations.LINEAR),
-                            new Keyframe(1.75f, AnimationHelper.createScalingVector(0.8f, 1f, 0.8f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("head",
-                    new Transformation(Transformation.Targets.TRANSLATE,
-                            new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("head",
-                    new Transformation(Transformation.Targets.ROTATE,
-                            new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR),
-                            new Keyframe(2f, AnimationHelper.createRotationalVector(-2.5f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("lower_body",
-                    new Transformation(Transformation.Targets.TRANSLATE,
-                            new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("lower_body",
-                    new Transformation(Transformation.Targets.ROTATE,
-                            new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR),
-                            new Keyframe(1.5f, AnimationHelper.createRotationalVector(5f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("lower_body",
-                    new Transformation(Transformation.Targets.SCALE,
-                            new Keyframe(0f, AnimationHelper.createScalingVector(1f, 1f, 1f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("arms",
-                    new Transformation(Transformation.Targets.TRANSLATE,
-                            new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
-                                    Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("arms",
-                    new Transformation(Transformation.Targets.ROTATE,
-                            new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR))).build();
     public static final Animation NORHVAL_DANCING = Animation.Builder.create(3f).looping()
             .addBoneAnimation("torso",
@@ -322,5 +250,30 @@ public class ModAnimations {
                             new Keyframe(1.7916767f, AnimationHelper.createScalingVector(1f, 1f, 1.2f),
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(3f, AnimationHelper.createScalingVector(1f, 1f, 1f),
+                                    Transformation.Interpolations.LINEAR))).build();
+    public static final Animation NORHVAL_SITTING = Animation.Builder.create(2f).looping()
+            .addBoneAnimation("arms",
+                    new Transformation(Transformation.Targets.ROTATE,
+                            new Keyframe(0f, AnimationHelper.createRotationalVector(-7.5f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(1f, AnimationHelper.createRotationalVector(2.5f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(2f, AnimationHelper.createRotationalVector(-7.5f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR)))
+            .addBoneAnimation("lower_body",
+                    new Transformation(Transformation.Targets.TRANSLATE,
+                            new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(1f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(2f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR)))
+            .addBoneAnimation("lower_body",
+                    new Transformation(Transformation.Targets.ROTATE,
+                            new Keyframe(0f, AnimationHelper.createRotationalVector(5f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(1f, AnimationHelper.createRotationalVector(10f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(2f, AnimationHelper.createRotationalVector(5f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR))).build();
 }

@@ -66,6 +66,7 @@ public class NorhvalModel<T extends NorhvalEntity> extends SinglePartEntityModel
 
 		this.animateMovement(ModAnimations.NORHVAL_FLYING, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.updateAnimation(entity.idleAnimationState, ModAnimations.NORHVAL_IDLE, ageInTicks, 1f);
+		this.updateAnimation(entity.sitAnimationState, ModAnimations.NORHVAL_SITTING, ageInTicks, 1f);
 
 	}
 	private void setHeadAngles(float headYaw, float headPitch) {
