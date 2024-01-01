@@ -142,10 +142,6 @@ public class NorhvalEntity extends TameableEntity implements Mount{
             }
         }
     @Override
-    public boolean canBeLeashedBy(PlayerEntity player) {
-        return !this.isBaby() && this.isTamed();
-    }
-    @Override
     public boolean shouldDismountUnderwater() {
         return true;
     }
@@ -209,6 +205,11 @@ public class NorhvalEntity extends TameableEntity implements Mount{
             this.norhval.setYaw(-((float) MathHelper.atan2(vec3d.x, vec3d.z)) * 57.295776F);
             this.norhval.bodyYaw = this.norhval.getYaw();
         }
+    }
+
+    @Override
+    public boolean canBeLeashedBy(PlayerEntity player) {
+        return false;
     }
 
     //Tameable Entity
