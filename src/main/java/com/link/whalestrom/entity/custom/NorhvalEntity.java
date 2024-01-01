@@ -14,6 +14,7 @@ import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
@@ -22,6 +23,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -49,7 +51,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(0, new SitGoal(this));
-        this.goalSelector.add(1, new FlyRandomlyGoal(this));
+        this.goalSelector.add(0, new FlyRandomlyGoal(this));
         this.goalSelector.add(0, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
         this.goalSelector.add(3, new LookAtDirectionGoal(this));
         this.goalSelector.add(2, new FollowParentGoal(this, 0.1D));
@@ -399,6 +401,15 @@ public class NorhvalEntity extends TameableEntity implements Mount{
           positionUpdater.accept(passenger, this.getX() + (double) (0.1F * f), this.getBodyY(1F), this.getZ() - (double) (0.1F * g));
       }
   */
+
+
+    public static boolean canSpawn(EntityType<NorhvalEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        BlockState blockState = world.getBlockState(pos);
+        return random.nextInt(6) == 0 && pos.getY() > 40 && pos.getY() - world.getTopPosition(Heightmap.Type.WORLD_SURFACE, pos).getY() > 70 && blockState.isAir()
+                && world.getEntitiesByClass(EnderDragonEntity.class, new Box(pos).expand(80D), EntityPredicates.EXCEPT_SPECTATOR).isEmpty()
+                && SpawnHelper.isClearForSpawn(world, pos, blockState, blockState.getFluidState(), ModEntities.NORHVAL);
+    }
+
     //Sounds
     @Nullable
     @Override
