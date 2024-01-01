@@ -1,7 +1,6 @@
 package com.link.whalestrom.entity.client;
 
 import com.link.whalestrom.Whalestrom;
-import com.link.whalestrom.WhalestromClient;
 import com.link.whalestrom.entity.custom.NorhvalEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
