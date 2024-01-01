@@ -28,15 +28,13 @@ public class Whalestrom implements ModInitializer {
 				entries.add(ModItems.ARTIFACT_LEVITATION);
 
 			}).build());
-	public static void generateWorldGeneration() {
-		EntitySpawns.addSpawns();
-	}
 	@Override
 	public void onInitialize() {
 		NorhvalEntity.registerModEntities();
 		FabricDefaultAttributeRegistry.register(ModEntities.NORHVAL, NorhvalEntity.createNorhvalAttributes());
 		ModItems.registerItems();
-		Whalestrom.generateWorldGeneration();
+		//Whalestrom.generateWorldGeneration();
+		EntitySpawns.addSpawns();
 		LOGGER.info("Successfully loaded Whalestrom!");
 	}
 }
