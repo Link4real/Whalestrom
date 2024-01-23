@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gAg",
+    "GWG",
+    " g "
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "A": {
+      "item": "minecraft:amethyst_cluster"
+    },
+    "G": {
+      "item": "minecraft:gold_block"
+    },
+    "W": {
+      "item": "whalestrom:antigravity_shard"
+    }
+  },
+  "result": {
+    "item": "whalestrom:artifact_of_levitation",
+    "count": 1
+  }
+}

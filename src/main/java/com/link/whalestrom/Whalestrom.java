@@ -26,6 +26,7 @@ public class Whalestrom implements ModInitializer {
 				entries.add(ModItems.NORHVAL_SPAWN_EGG);
 				entries.add(ModItems.WHALE_TOOTH);
 				entries.add(ModItems.ARTIFACT_LEVITATION);
+				entries.add(ModItems.ANTIGRAVITY_SHARD);
 
 			}).build());
 	@Override
@@ -33,7 +34,6 @@ public class Whalestrom implements ModInitializer {
 		NorhvalEntity.registerModEntities();
 		FabricDefaultAttributeRegistry.register(ModEntities.NORHVAL, NorhvalEntity.createNorhvalAttributes());
 		ModItems.registerItems();
-		//Whalestrom.generateWorldGeneration();
 		EntitySpawns.addSpawns();
 		LOGGER.info("Successfully loaded Whalestrom!");
 	}
@@ -47,4 +47,4 @@ public class Whalestrom implements ModInitializer {
 //                            |          |
 //                               |         |
 //                                  |_______|
-//                                                          Link4real 2023
+//                                                          Link4real 2024

@@ -5,5 +5,8 @@
   "item.whalestrom.artifact_of_levitation": "ARTIFACT OV LEVITASHUN",
   "key.whalestrom.flydown": "FLY DOWN WIF UR WHALE",
   "category.whalestrom.keybinds": "WHALESTROM KEYBINDZ",
-  "item.whalestrom.artifact_of_levitation.tooltip": "DIS EXQUIZIET ARTIFACT GRANTS ITZ USR LEVITASHUN!"
+  "item.whalestrom.artifact_of_levitation.tooltip": "DIS EXQUIZIET ARTIFACT GRANTS ITZ USR LEVITASHUN!",
+
+  "item.whalestrom.antigravity_shard": "ANTIGRAVITY SHARD",
+  "item.whalestrom.antigravity_shard.tooltip": "§kDESOLATESILENCE"
 }

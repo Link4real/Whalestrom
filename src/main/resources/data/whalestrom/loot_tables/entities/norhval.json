@@ -34,11 +34,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "whalestrom:artifact_of_levitation",
+          "name": "whalestrom:antigravity_shard",
           "conditions": [
             {
               "condition": "minecraft:random_chance",
-              "chance": 0.1
+              "chance": 0.01
             }
           ]
         }

@@ -5,5 +5,8 @@
   "item.whalestrom.artifact_of_levitation": "Artifact of Levitation",
   "key.whalestrom.flydown": "Fly Down with your whale",
   "category.whalestrom.keybinds": "Whalestrom Keybinds",
-  "item.whalestrom.artifact_of_levitation.tooltip": "This exquisite Artifact grants its user levitation!"
+  "item.whalestrom.artifact_of_levitation.tooltip": "This exquisite Artifact grants its user levitation!",
+
+  "item.whalestrom.antigravity_shard": "Antigravity Shard",
+  "item.whalestrom.antigravity_shard.tooltip": "§kdesolatesilence"
 }

@@ -15,10 +15,8 @@ public class EntitySpawns {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.PLAINS),
                 SpawnGroup.CREATURE, ModEntities.NORHVAL, 50, 1, 4);
 
-
         SpawnRestriction.register(ModEntities.NORHVAL, SpawnRestriction.Location.NO_RESTRICTIONS,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NorhvalEntity::canSpawn);
-
 
     }
 }
