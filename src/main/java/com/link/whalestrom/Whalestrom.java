@@ -3,13 +3,17 @@ package com.link.whalestrom;
 import com.link.whalestrom.entity.ModEntities;
 import com.link.whalestrom.entity.custom.NorhvalEntity;
 import com.link.whalestrom.item.ModItems;
+import com.link.whalestrom.painting.ModPaintings;
+import com.link.whalestrom.sounds.ModSounds;
 import com.link.whalestrom.world.gen.EntitySpawns;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
@@ -29,12 +33,15 @@ public class Whalestrom implements ModInitializer {
 				entries.add(ModItems.ANTIGRAVITY_SHARD);
 
 			}).build());
+
 	@Override
 	public void onInitialize() {
 		NorhvalEntity.registerModEntities();
 		FabricDefaultAttributeRegistry.register(ModEntities.NORHVAL, NorhvalEntity.createNorhvalAttributes());
 		ModItems.registerItems();
 		EntitySpawns.addSpawns();
+		ModPaintings.registerPaintings();
+		ModSounds.registerSounds();
 		LOGGER.info("Successfully loaded Whalestrom!");
 	}
 }

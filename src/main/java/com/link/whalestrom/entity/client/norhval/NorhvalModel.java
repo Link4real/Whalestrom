@@ -1,4 +1,4 @@
-package com.link.whalestrom.entity.client;
+package com.link.whalestrom.entity.client.norhval;
 
 import com.link.whalestrom.entity.animation.ModAnimations;
 import com.link.whalestrom.entity.custom.NorhvalEntity;

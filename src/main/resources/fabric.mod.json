@@ -3,7 +3,7 @@
 	"id": "whalestrom",
 	"version": "${version}",
 	"name": "Whalestrom",
-	"description": "Adds flying whales to the game!",
+	"description": "Whalestrom adds flying whales to the game, with which you can travel around in the sky!",
 	"authors": [
 		"Link4real"
 	],
@@ -19,6 +19,9 @@
 		"main": [
 			"com.link.whalestrom.Whalestrom"
 		],
+		"fabric-datagen": [
+			"com.link.whalestrom.WhalestromDataGen"
+		],
 		"client": [
 			"com.link.whalestrom.WhalestromClient"
 		]
@@ -32,5 +35,13 @@
 		"java": ">=17",
 		"fabric-api": "*",
 		"fabric-key-binding-api-v1": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.wiki": "https://link4real.github.io/wiki/whalestrom.html",
+				"modmenu.modrinth": "https://modrinth.com/mod/whalestrom"
+			}
+		}
 	}
 }

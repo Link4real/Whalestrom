@@ -3,14 +3,11 @@ package com.link.whalestrom.entity.ai;
 import com.link.whalestrom.entity.custom.NorhvalEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.TameableEntity;
 
 import java.util.EnumSet;
 
 public class WhaleSitGoal extends Goal {
-    private final TameableEntity whale;
+    private final NorhvalEntity whale;
 
     public WhaleSitGoal(NorhvalEntity whale) {
         this.whale = whale;
@@ -40,7 +37,7 @@ public class WhaleSitGoal extends Goal {
                 return false;
             }
         }
-        return this.whale.isSitting();
+        return this.whale.isInSittingPose();
     }
 
     @Override
@@ -51,7 +48,6 @@ public class WhaleSitGoal extends Goal {
 
     @Override
     public void stop() {
-        this.whale.getNavigation();
         this.whale.setSitting(false);
     }
 }

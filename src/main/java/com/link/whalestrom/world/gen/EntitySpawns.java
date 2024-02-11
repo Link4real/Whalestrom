@@ -13,7 +13,7 @@ public class EntitySpawns {
 
     public static void addSpawns() {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.PLAINS),
-                SpawnGroup.CREATURE, ModEntities.NORHVAL, 50, 1, 4);
+                SpawnGroup.CREATURE, ModEntities.NORHVAL, 30, 1, 2);
 
         SpawnRestriction.register(ModEntities.NORHVAL, SpawnRestriction.Location.NO_RESTRICTIONS,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NorhvalEntity::canSpawn);

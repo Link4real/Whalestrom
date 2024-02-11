@@ -2,8 +2,10 @@ package com.link.whalestrom.entity.custom;
 
 import com.link.whalestrom.Whalestrom;
 import com.link.whalestrom.entity.ModEntities;
+import com.link.whalestrom.entity.ai.WhaleFlyRandomlyGoal;
 import com.link.whalestrom.entity.ai.WhaleSitGoal;
 import com.link.whalestrom.init.KeybindsInit;
+import com.link.whalestrom.sounds.ModSounds;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -51,7 +53,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new WhaleSitGoal(this));
-        this.goalSelector.add(2, new FlyRandomlyGoal(this));
+        this.goalSelector.add(2, new WhaleFlyRandomlyGoal(this));
         this.goalSelector.add(1, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.COD), false));
         this.goalSelector.add(2, new LookAtDirectionGoal(this));
         this.goalSelector.add(3, new FollowParentGoal(this, 0.1D));
@@ -60,12 +62,12 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         this.goalSelector.add(1, new FollowOwnerGoal(this, 1.1D, 20f, 5f, false));
     }
     public static DefaultAttributeContainer.Builder createNorhvalAttributes() {
-     return MobEntity.createMobAttributes()
-             .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
-             .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.1f)
-             .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.1f)
-             .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f)
-             .add(EntityAttributes.HORSE_JUMP_STRENGTH, 0.3f);
+        return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
+                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.2f)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.1f)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f)
+                .add(EntityAttributes.HORSE_JUMP_STRENGTH, 0.1f);
     }
 
     @Override
@@ -100,45 +102,7 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         }
     }
 
-    // Norhval flies randomly through the air:
-    static class FlyRandomlyGoal  extends Goal {
-        private final NorhvalEntity norhval;
-            public FlyRandomlyGoal(NorhvalEntity norhval) {
-                this.norhval = norhval;
-                this.setControls(EnumSet.of(Goal.Control.MOVE));
-            }
 
-            @Override
-            public boolean canStart() {
-                MoveControl moveControl = this.norhval.getMoveControl();
-                return !moveControl.isMoving();
-            }
-
-            @Override
-            public boolean shouldContinue() {
-                return false;
-            }
-
-            @Override
-            public void start() {
-                Random random = this.norhval.getRandom();
-                double randomX = 48D + (random.nextDouble() * 2.0D - 1.0D) * 128.0D;
-                double randomZ = 48D + (random.nextDouble() * 2.0D - 1.0D) * 128.0D;
-
-                double d = this.norhval.getX() + randomX;
-                double e = this.norhval.getY() + (double) ((random.nextDouble() * 2.0F - 1.0F) * 16.0F);
-                double f = this.norhval.getZ() + randomZ;
-
-                if (this.norhval.getY() < 68D)
-                    e = this.norhval.getY() + 16D * random.nextDouble();
-                else if (this.norhval.getY() < 85D)
-                    e = this.norhval.getY() + 40D * random.nextDouble();
-                else if (this.norhval.getY() > 300)
-                    e = this.norhval.getY() - 26D * random.nextDouble();
-
-                this.norhval.getMoveControl().moveTo(d, e, f, 1.0D);
-            }
-        }
     @Override
     public boolean shouldDismountUnderwater() {
         return true;
@@ -329,9 +293,9 @@ public class NorhvalEntity extends TameableEntity implements Mount{
                     this.sidewaysSpeed = 2;
                 }
                 if (KeybindsInit.flyDown.isPressed()) {
-                        this.updateVelocity(0.0f, movementInput);
-                        this.move(MovementType.SELF, this.getVelocity());
-                        this.setVelocity(this.getVelocity().add(0, -0.008f, 0));
+                    this.updateVelocity(0.0f, movementInput);
+                    this.move(MovementType.SELF, this.getVelocity());
+                    this.setVelocity(this.getVelocity().add(0, -0.008f, 0));
                 }
                 if ((MinecraftClient.getInstance().options.leftKey.isPressed() || MinecraftClient.getInstance().options.rightKey.isPressed()) && KeybindsInit.flyDown.isPressed() && MinecraftClient.getInstance().options.sprintKey.isPressed()) {
                     this.sidewaysSpeed = 0.5f;
@@ -394,22 +358,6 @@ public class NorhvalEntity extends TameableEntity implements Mount{
         }
         return super.updatePassengerForDismount(passenger);
     }
-    /*   @Override
-      protected void updatePassengerPosition(Entity passenger, PositionUpdater positionUpdater) {
-          if (!this.hasPassenger(passenger)) {
-              return;
-          }
-          float offSet = 12F;
-          if (passenger.equals(this.getFirstPassenger())) {
-              offSet = 1F;
-          }
-          float f = MathHelper.sin(this.bodyYaw * 0.0027453292F) * offSet;
-          float g = MathHelper.cos(this.bodyYaw * 0.0027453292F) * offSet;
-
-          positionUpdater.accept(passenger, this.getX() + (double) (0.1F * f), this.getBodyY(1F), this.getZ() - (double) (0.1F * g));
-      }
-  */
-
 
     public static boolean canSpawn(EntityType<NorhvalEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         BlockState blockState = world.getBlockState(pos);
@@ -421,19 +369,19 @@ public class NorhvalEntity extends TameableEntity implements Mount{
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_DOLPHIN_AMBIENT;
+        return ModSounds.NORHVAL_AMBIENT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_DOLPHIN_HURT;
+        return ModSounds.NORHVAL_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_DOLPHIN_DEATH;
+        return ModSounds.NORHVAL_DEATH;
     }
 
     public NorhvalEntity createChild(ServerWorld world, PassiveEntity entity) {

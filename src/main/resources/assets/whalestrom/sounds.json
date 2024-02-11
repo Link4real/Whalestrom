@@ -1,0 +1,22 @@
+{
+  "norhval_ambient": {
+    "subtitle": "sounds.whalestrom.norhval_ambient",
+    "sounds": [
+      "whalestrom:norhval_ambient_one",
+      "whalestrom:norhval_ambient_two",
+      "whalestrom:norhval_ambient_three"
+    ]
+  },
+  "norhval_death": {
+    "subtitle": "sounds.whalestrom.norhval_death",
+    "sounds": [
+      "whalestrom:norhval_death"
+    ]
+  },
+  "norhval_hurt": {
+    "subtitle": "sounds.whalestrom.norhval_hurt",
+    "sounds": [
+      "whalestrom:norhval_hurt_one"
+    ]
+  }
+}

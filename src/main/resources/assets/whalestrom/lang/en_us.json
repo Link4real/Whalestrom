@@ -4,9 +4,16 @@
   "item.whalestrom.whale_tooth": "Whale Tooth",
   "item.whalestrom.artifact_of_levitation": "Artifact of Levitation",
   "key.whalestrom.flydown": "Fly Down with your whale",
-  "category.whalestrom.keybinds": "Whalestrom Keybinds",
+  "category.whalestrom.keybinds": "Whalestrom",
   "item.whalestrom.artifact_of_levitation.tooltip": "This exquisite Artifact grants its user levitation!",
 
   "item.whalestrom.antigravity_shard": "Antigravity Shard",
-  "item.whalestrom.antigravity_shard.tooltip": "§kdesolatesilence"
+  "item.whalestrom.antigravity_shard.tooltip": "§kdesolatesilence",
+  "painting.whalestrom.the_flying_whale.title": "The Flying Whale",
+  "painting.whalestrom.the_flying_whale.author": "Link4real",
+  "modmenu.modrinth": "Modrinth",
+  "modmenu.wiki": "Official Wiki",
+  "sounds.whalestrom.norhval_ambient": "Norhval whistles",
+  "sounds.whalestrom.norhval_death": "Norhval dies",
+  "sounds.whalestrom.norhval_hurt": "Norhval gets hurt"
 }

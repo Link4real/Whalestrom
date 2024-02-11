@@ -17,7 +17,7 @@ import java.util.List;
 
 public class AntiGravityShardItem extends Item {
     public AntiGravityShardItem(Settings settings) {
-        super(new FabricItemSettings().maxCount(1).fireproof().rarity(Rarity.UNCOMMON).food(new FoodComponent.Builder().alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 20, 0), 1f).build()));
+        super(new FabricItemSettings().maxCount(1).fireproof().rarity(Rarity.UNCOMMON).food(new FoodComponent.Builder().alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 20, 0), 1f).statusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 120, 12), 1f).build()));
     }
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.DRINK;
