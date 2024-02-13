@@ -16,7 +16,19 @@
   "norhval_hurt": {
     "subtitle": "sounds.whalestrom.norhval_hurt",
     "sounds": [
-      "whalestrom:norhval_hurt_one"
+      "whalestrom:norhval_hurt"
+    ]
+  },
+  "cetacean_staff_shoot": {
+    "subtitle": "sounds.whalestrom.cetacean_staff_shoot",
+    "sounds": [
+      "whalestrom:cetacean_staff_shoot"
+    ]
+  },
+  "whale_tooth_thrown": {
+    "subtitle": "sounds.whalestrom.whale_tooth_thrown",
+    "sounds": [
+      "whalestrom:whale_tooth_thrown"
     ]
   }
 }

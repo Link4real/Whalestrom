@@ -8,5 +8,8 @@
   "item.whalestrom.artifact_of_levitation.tooltip": "Dieses exquisite Artefakt gewährt seinem Benutzer die Schwebefähigkeit!",
 
   "item.whalestrom.antigravity_shard": "Antigravitationssplitter",
-  "item.whalestrom.antigravity_shard.tooltip": "§kTrostloseStille!"
+  "item.whalestrom.antigravity_shard.tooltip": "§kTrostloseStille!",
+  "sounds.whalestrom.norhval_ambient": "Norhval pfeift",
+  "sounds.whalestrom.norhval_death": "Norhval stirbt",
+  "sounds.whalestrom.norhval_hurt": "Norhval erleidet Schmerzen"
 }

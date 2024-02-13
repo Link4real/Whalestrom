@@ -2,25 +2,25 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "gWg",
-    "GAG",
-    " G "
+    " A ",
+    " / "
   ],
   "key": {
     "g": {
       "item": "minecraft:gold_ingot"
     },
     "W": {
-      "item": "whalestrom:antigravity_shard"
-    },
-    "G": {
-      "item": "minecraft:gold_block"
+      "item": "whalestrom:artifact_of_levitation"
     },
     "A": {
       "item": "minecraft:amethyst_shard"
+    },
+    "/": {
+      "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "whalestrom:artifact_of_levitation",
+    "item": "whalestrom:cetacean_staff",
     "count": 1
   }
 }

@@ -1,7 +1,8 @@
-package com.link.whalestrom.item;
+package com.link.whalestrom.item.custom;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,29 +16,39 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class AntiGravityShardItem extends Item {
-    public AntiGravityShardItem(Settings settings) {
-        super(new FabricItemSettings().maxCount(1).fireproof().rarity(Rarity.UNCOMMON).food(new FoodComponent.Builder().alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 20, 0), 1f).statusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 120, 12), 1f).build()));
+public class ArtifactLevitationItem extends Item {
+    public ArtifactLevitationItem(Settings settings) {
+        super(new FabricItemSettings().maxCount(1).fireproof().rarity(Rarity.UNCOMMON));
+    }
+    public int getMaxUseTime(ItemStack stack) {
+        return 20;
     }
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.DRINK;
     }
 
     public SoundEvent getDrinkSound() {
-        return SoundEvents.ENTITY_SHULKER_SHOOT;
+        return SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE;
     }
 
     public SoundEvent getEatSound() {
-        return SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME;
-    }
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        return ItemUsage.consumeHeldItem(world, user, hand);
-    }
-    public int getMaxUseTime(ItemStack stack) {
-        return 40;
+        return SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE;
     }
     @Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        super.finishUsing(stack, world, user);
+        if (!world.isClient) {
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 250, 1));
+        }
+        return stack;
+    }
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        user.getItemCooldownManager().set(this, 250);
+        return ItemUsage.consumeHeldItem(world, user, hand);
+    }
+
+    @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("item.whalestrom.antigravity_shard.tooltip").formatted(Formatting.DARK_PURPLE));
+        tooltip.add(Text.translatable("item.whalestrom.artifact_of_levitation.tooltip").formatted(Formatting.GOLD));
     }
 }

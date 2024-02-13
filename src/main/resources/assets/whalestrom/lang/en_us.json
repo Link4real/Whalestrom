@@ -6,14 +6,20 @@
   "key.whalestrom.flydown": "Fly Down with your whale",
   "category.whalestrom.keybinds": "Whalestrom",
   "item.whalestrom.artifact_of_levitation.tooltip": "This exquisite Artifact grants its user levitation!",
-
   "item.whalestrom.antigravity_shard": "Antigravity Shard",
   "item.whalestrom.antigravity_shard.tooltip": "§kdesolatesilence",
   "painting.whalestrom.the_flying_whale.title": "The Flying Whale",
   "painting.whalestrom.the_flying_whale.author": "Link4real",
   "modmenu.modrinth": "Modrinth",
-  "modmenu.wiki": "Official Wiki",
+  "modmenu.wiki": "Wiki",
   "sounds.whalestrom.norhval_ambient": "Norhval whistles",
   "sounds.whalestrom.norhval_death": "Norhval dies",
-  "sounds.whalestrom.norhval_hurt": "Norhval gets hurt"
+  "sounds.whalestrom.norhval_hurt": "Norhval gets hurt",
+
+  "item.whalestrom.cetacean_staff": "Cetacean Staff",
+  "sounds.whalestrom.cetacean_staff_shoot": "Cetacean Staff shoots",
+  "item.whalestrom.cetacean_staff.tooltip": "Shoots Shulker Bullets through the air!",
+  "whale_tooth_thrown": "Whale Tooth gets thrown",
+  "entity.whalestrom.tooth_projectile": "Whale Tooth Projectile",
+  "sounds.whalestrom.whale_tooth_thrown": "Whale Tooth gets thrown"
 }

@@ -7,5 +7,5 @@
 <p style="font-size:36px;" align="center">This is a Minecraft Mod for Fabric!</p>
 
 
-<p align="center"><img align="middle" src="https://i.imgur.com/Yq552aD.png"></p>
+<p align="center"><img align="middle" src="https://i.imgur.com/EohOxHn.png"></p>
 <p style="font-size:25px" align="center">Please respect the license in any way!</p>

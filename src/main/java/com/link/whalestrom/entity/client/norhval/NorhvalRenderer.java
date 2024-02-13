@@ -2,7 +2,6 @@ package com.link.whalestrom.entity.client.norhval;
 
 import com.link.whalestrom.Whalestrom;
 import com.link.whalestrom.entity.client.ModModelLayers;
-import com.link.whalestrom.entity.client.norhval.NorhvalModel;
 import com.link.whalestrom.entity.custom.NorhvalEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;

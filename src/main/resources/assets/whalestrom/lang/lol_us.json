@@ -8,5 +8,8 @@
   "item.whalestrom.artifact_of_levitation.tooltip": "DIS EXQUIZIET ARTIFACT GRANTS ITZ USR LEVITASHUN!",
 
   "item.whalestrom.antigravity_shard": "ANTIGRAVITY SHARD",
-  "item.whalestrom.antigravity_shard.tooltip": "§kDESOLATESILENCE"
+  "item.whalestrom.antigravity_shard.tooltip": "§kDESOLATESILENCE",
+  "sounds.whalestrom.norhval_ambient": "NORHVAL WHISTLES",
+  "sounds.whalestrom.norhval_death": "NORHVAL DIES",
+  "sounds.whalestrom.norhval_hurt": "NORHVAL GETZ HURT"
 }

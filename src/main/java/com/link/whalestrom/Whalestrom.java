@@ -10,10 +10,8 @@ import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
@@ -31,6 +29,7 @@ public class Whalestrom implements ModInitializer {
 				entries.add(ModItems.WHALE_TOOTH);
 				entries.add(ModItems.ARTIFACT_LEVITATION);
 				entries.add(ModItems.ANTIGRAVITY_SHARD);
+				entries.add(ModItems.CETACEAN_STAFF);
 
 			}).build());
 
