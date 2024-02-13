@@ -16,10 +16,8 @@
   "sounds.whalestrom.norhval_death": "Norhval dies",
   "sounds.whalestrom.norhval_hurt": "Norhval gets hurt",
 
-  "item.whalestrom.cetacean_staff": "Cetacean Staff",
-  "sounds.whalestrom.cetacean_staff_shoot": "Cetacean Staff shoots",
-  "item.whalestrom.cetacean_staff.tooltip": "Shoots Shulker Bullets through the air!",
-  "whale_tooth_thrown": "Whale Tooth gets thrown",
   "entity.whalestrom.tooth_projectile": "Whale Tooth Projectile",
-  "sounds.whalestrom.whale_tooth_thrown": "Whale Tooth gets thrown"
+  "sounds.whalestrom.whale_tooth_thrown": "Whale Tooth gets thrown",
+  "item.whalestrom.norhval_spawn_egg.tooltip": "Summons the legendary Norhval",
+  "item.whalestrom.whale_tooth.tooltip": "§7Can be thrown!"
 }

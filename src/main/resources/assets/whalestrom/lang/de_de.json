@@ -11,5 +11,9 @@
   "item.whalestrom.antigravity_shard.tooltip": "§kTrostloseStille!",
   "sounds.whalestrom.norhval_ambient": "Norhval pfeift",
   "sounds.whalestrom.norhval_death": "Norhval stirbt",
-  "sounds.whalestrom.norhval_hurt": "Norhval erleidet Schmerzen"
+  "sounds.whalestrom.norhval_hurt": "Norhval erleidet Schmerzen",
+  "entity.whalestrom.tooth_projectile": "Walzahn Geschoss",
+  "sounds.whalestrom.whale_tooth_thrown": "Walzahn wird geworfen",
+  "item.whalestrom.norhval_spawn_egg.tooltip": "Beschwört den legendären Norhval",
+  "item.whalestrom.whale_tooth.tooltip": "§7Kann geworfen werden!"
 }

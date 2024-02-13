@@ -43,7 +43,6 @@ public class ArtifactLevitationItem extends Item {
         return stack;
     }
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        user.getItemCooldownManager().set(this, 250);
         return ItemUsage.consumeHeldItem(world, user, hand);
     }
 

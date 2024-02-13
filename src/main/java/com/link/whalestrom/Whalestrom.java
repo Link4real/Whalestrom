@@ -24,12 +24,12 @@ public class Whalestrom implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("Whalestrom");
 
 	public static ItemGroup ITEM_GROUP = Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID, "main"),
-			FabricItemGroup.builder().displayName(Text.literal("Whalestrom")).icon(() -> new ItemStack(ModItems.NORHVAL_SPAWN_EGG)).entries((displayContext, entries) -> {
+			FabricItemGroup.builder().displayName(Text.literal("Whalestrom")).icon(() -> new ItemStack(ModItems.ARTIFACT_LEVITATION)).entries((displayContext, entries) -> {
 				entries.add(ModItems.NORHVAL_SPAWN_EGG);
 				entries.add(ModItems.WHALE_TOOTH);
 				entries.add(ModItems.ARTIFACT_LEVITATION);
 				entries.add(ModItems.ANTIGRAVITY_SHARD);
-				entries.add(ModItems.CETACEAN_STAFF);
+			//	entries.add(ModItems.CETACEAN_STAFF);
 
 			}).build());
 

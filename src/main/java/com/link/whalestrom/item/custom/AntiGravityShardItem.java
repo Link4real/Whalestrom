@@ -28,7 +28,6 @@ public class AntiGravityShardItem extends Item {
         return SoundEvents.ENTITY_SHULKER_SHOOT;
     }
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        user.getItemCooldownManager().set(this, 720);
         return ItemUsage.consumeHeldItem(world, user, hand);
     }
     public int getMaxUseTime(ItemStack stack) {

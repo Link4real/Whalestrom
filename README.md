@@ -1,4 +1,4 @@
-<h1 style="font-size:60px;"align="center"><img src="https://i.imgur.com/PIGhI7F.png"></h1>
+<h1 style="font-size:60px;"align="center"><img src="https://i.imgur.com/cWF6Bwm.png"></h1>
 
 <p style="font-size:25px" align="center">Version 0.2!</p>
 
